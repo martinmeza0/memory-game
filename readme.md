@@ -5,7 +5,7 @@ Al comenzar, las cartas estaran boca abajo, el jugador tendra como objetivo enco
 El jugador ganara cuando todas las cartas queden expuestas.
 
 
-![vista previa](preview.jpg "vista previa")
+![vista previa](https://github.com/martinmeza0/memory-game/blob/master/img/preview.jpg "vista previa")
 ------------
 ###### HTML CSS JAVASCRIPT
 ------------

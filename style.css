@@ -78,3 +78,17 @@ footer {
 
 footer a {text-decoration: none;}
 
+@media (max-width: 480px) {
+    .board {
+        width: auto;
+        display: flexbox;
+        justify-content: center;
+    }
+    .card {
+        width: 25%;
+        height: auto;
+        align-items: center;
+        margin: 5px;
+
+    }
+}

@@ -30,6 +30,7 @@ function checkForMatch(){
     Match ? disableCards() : unFlipCards();  //Ternary Operator, un simplificador del if,  condition ? expr1(true) : expr2(false)
 }
 
+//desabilita las cartas que hayan tenido match
 function disableCards(){
     firstCard.removeEvenListener('click', FlipCard);
     secondCard.removeEvenListener('click', FlipCard);
@@ -48,13 +49,13 @@ function unFlipCards() {
     }, 1500);
 }
 
-//
+/
 function resetBoard(){
     [FlippedCard, LockBoard] = [false, false];
     [firstCard, secondCard] = [null,null];
 }
 
-//
+//reparte las cartas aleatoriamente
 (function shuffleCards(){
     cards.forEach(card => {
         let RandomPos = Math.floor(Math.random()*12);

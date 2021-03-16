@@ -49,7 +49,6 @@ function unFlipCards() {
     }, 1500);
 }
 
-/
 function resetBoard(){
     [FlippedCard, LockBoard] = [false, false];
     [firstCard, secondCard] = [null,null];

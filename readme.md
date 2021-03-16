@@ -9,5 +9,5 @@ El jugador ganara la partida cuando todas las cartas queden expuestas.
 ------------
 ###### HTML - CSS - JAVASCRIPT
 
-Martin meza 2021
+###### Martin meza 2021
 ------------

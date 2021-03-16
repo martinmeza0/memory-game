@@ -49,6 +49,7 @@ function unFlipCards() {
     }, 1500);
 }
 
+//Resetea el tablero
 function resetBoard(){
     [FlippedCard, LockBoard] = [false, false];
     [firstCard, secondCard] = [null,null];

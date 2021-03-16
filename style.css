@@ -2,9 +2,79 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
 body {
-    height: 100vh;  /* vh = 1% of the viewport height*/
+    background: url('img/retina_wood.png');
+    /* display: flex; */
+    /* height: 100vh;  /*vh = 1% of the viewport height */
     /* background-color: aqua; */
 }
+header {
+    
+    text-align: center;
+    margin: 20px 0;
+}
+
+h2 {
+    color: #7f5539;
+}
+
+.board{
+    width: 600px;
+    height: 600px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    /* border: 2px solid lime; */
+
+    /* Adding 3D perspective*/
+    perspective: 1000px; 
+}
+
+.card {
+    background: url('img/front-face.jpg');
+    width: calc(25% - 10px);
+    height: calc(33% - 10px);
+    margin: 5px;
+    position: relative;
+    transform: scale(1);
+    /* box-shadow: 0px 1px 8px 1px rgba(69,69,69,1); */
+    box-shadow: 0px 0px 7px 1px rgba(97,97,97,0.89);
+
+    /* Adding 3D perspective*/
+    transform-style: preserve-3d;
+    transition: transform .5s;
+}
+
+.card:active {
+    transform: scale(.97);
+    transition: transform .2s;
+}
+
+.card.flip {
+    transform: rotateY(180deg);
+}
+
+.front-face, .back-face {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    position: absolute;
+    background: url('/img/front-face.jpg');   
+    /* hiding the backface card*/
+    backface-visibility: hidden;
+}
+.front-face {
+    transform: rotateY(180deg);
+}
+
+footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 10px;
+}
+
+footer a {text-decoration: none;}
+

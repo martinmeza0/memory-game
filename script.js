@@ -1,68 +1,101 @@
-const cards = document.querySelectorAll('.card');
+const cartas = document.querySelectorAll('.card');
+const aciertos = document.querySelector('.aciertos');
+const incorrecto = document.querySelector('.incorrecto');
+const cronometro = document.querySelector('.cronometro');
 
-let FlippedCard = false;
-let LockBoard = false;
-let firstCard, secondCard;
+let CartaGirada = false;
+let TableroBloqueado = false;
+let primeraCarta, segundaCarta;
+let hayMatch = 0;
+let noMatch = 0;
+let hours = `00`,
+    minutes = `00`,
+    seconds = `00`,
+    chronometerCall;
 
-function FlipCard(){
-    if(LockBoard) return;
-    if(this === firstCard) return;
+
+function girarCarta(){
+    if(TableroBloqueado) return;
+    if(this === primeraCarta) return;
 
     this.classList.add('flip');  //agrega la clase flip a los div.card que no tengan esta clase
     
-    if (!FlippedCard) {
+    if (!CartaGirada) {
         //1° Click
-        FlippedCard = true;
-        firstCard = this;
+        CartaGirada = true;
+        primeraCarta = this;
         
         return; // if == true, return detendra la ejecucion de la funcion (2° Click), caso contrario, se ejecutara dicha funcion
     }
     //2° Click
-    FlippedCard = false;
-    secondCard = this;
+    CartaGirada = false;
+    segundaCarta = this;
     //Matching
     checkForMatch();
 }
 
 //si hay matching, las cartas quedan deshabilitadas
 function checkForMatch(){
-    let Match = firstCard.dataset.match === secondCard.dataset.match;
-    Match ? disableCards() : unFlipCards();  //Ternary Operator, un simplificador del if,  condition ? expr1(true) : expr2(false)
+    let Match = primeraCarta.dataset.match === segundaCarta.dataset.match;
+    Match ? desabilitarCartas() : esconderCarta();  //Ternary Operator, un simplificador del if,  condition ? expr1(true) : expr2(false)
 }
 
 //desabilita las cartas que hayan tenido match
-function disableCards(){
-    firstCard.removeEvenListener('click', FlipCard);
-    secondCard.removeEvenListener('click', FlipCard);
-
-    resetBoard();
+function desabilitarCartas(){
+    primeraCarta.removeEventListener('click', girarCarta);
+    segundaCarta.removeEventListener('click', girarCarta);
+    
+    acertadas();
+    resetearTablero();
 }
 
 //si no hay matching, se giran las cartas denuevo
-function unFlipCards() {
-    LockBoard = true; //bloquea el tablero hasta que se haya completado la funcion
+function esconderCarta() {
+    TableroBloqueado = true; //bloquea el tablero hasta que se haya completado la funcion
     setTimeout (() => {
-        firstCard.classList.remove('flip');
-        secondCard.classList.remove('flip');
+        primeraCarta.classList.remove('flip');
+        segundaCarta.classList.remove('flip');
         
-        resetBoard();
+        resetearTablero();
+        desaciertos();
     }, 1500);
 }
 
 //Resetea el tablero
-function resetBoard(){
-    [FlippedCard, LockBoard] = [false, false];
-    [firstCard, secondCard] = [null,null];
+function resetearTablero(){
+    [CartaGirada, TableroBloqueado] = [false, false];
+    [primeraCarta, segundaCarta] = [null,null];
 }
 
+//si no hay match, se suman los errores
+function desaciertos(){
+    noMatch ++;
+    incorrecto.innerHTML = "Jugadas incorrectas: " + noMatch;
+}
+
+//si hay par se cuentan puntos
+function acertadas(){
+    hayMatch ++;
+    aciertos.innerHTML = "Jugadas acertadas: " + hayMatch;
+    ganaste();
+}
+
+function ganaste() {
+    if (hayMatch === 6) {
+        setTimeout(() => {
+            alert("¡Felicidades, has ganado!");
+        }, 600)
+        TableroBloqueado = true;
+    }
+} 
 //reparte las cartas aleatoriamente
-(function shuffleCards(){
-    cards.forEach(card => {
+(function repartirCartas(){
+    cartas.forEach(carta => {
         let RandomPos = Math.floor(Math.random()*12);
-        card.style.order = RandomPos;
+        carta.style.order = RandomPos;
     });
 })();
 
 //por cada carta clickeada, se llamara a la funcion flipcard (girar carta)
-cards.forEach(card => card.addEventListener('click', FlipCard));
+cartas.forEach(carta => carta.addEventListener('click', girarCarta));
     

@@ -70,6 +70,22 @@ h2 {
     transform: rotateY(180deg);
 }
 
+.scores {
+    display: flex;
+    justify-content: center;
+}
+
+.scores p {
+    display: inline-block;
+    padding: 10px;
+    margin: 5px;
+    color: #6f4b32;
+    border-radius: 3px;
+    font-size: 20px;
+
+}
+
+
 footer {
     margin-top: 20px;
     text-align: center;
@@ -81,7 +97,7 @@ footer a {text-decoration: none;}
 @media (max-width: 480px) {
     .board {
         width: auto;
-        display: flexbox;
+        display: flex;
         justify-content: center;
     }
     .card {

@@ -7,28 +7,67 @@
 
 body {
     background: url('img/retina_wood.png');
-    /* display: flex; */
-    /* height: 100vh;  /*vh = 1% of the viewport height */
-    /* background-color: aqua; */
 }
+
+.container {
+    margin: auto;
+    max-width: 70vh;
+}
+
 header {
-    
     text-align: center;
     margin: 20px 0;
 }
 
 h2 {
+    display: block;
     color: #7f5539;
+}
+header .container {
+    display: flex;
+    
+}
+.container .stopwatch {
+    margin: auto;
+    display: inline-block;
+    color: #6f4b32;
+    font-size: 2.25rem;
+    padding: 10px 3px;
+    border: 2px solid #fff;
+
+}
+.container button {
+    margin: auto;
+    display: inline-block;
+    position: relative;
+    top: 0;
+    left: 0;
+    background-color: #9d0208;
+    padding: 26px 8px;
+    color: #ccc;
+    border: none;
+    box-shadow: 0 0.6em #6a040f, 0 0.9em rgba(0, 0, 0, 0.4);
+    border-radius: 100%;
+} 
+
+.container button:hover{
+    top: 0.2rem;
+    box-shadow: 0 0.4em #6a040f, 0 0.6em rgba(0, 0, 0, 0.4);
+    transition: all .15s;
+
+}
+
+.container button:active {
+    top: 0.4rem;
+    box-shadow: 0 0.2em #6a040f, 0 0.2em rgba(0, 0, 0, 0.4);
+
 }
 
 .board{
-    width: 600px;
-    height: 600px;
+    height: 70vh;
     margin: auto;
     display: flex;
     flex-wrap: wrap;
-    /* border: 2px solid lime; */
-
     /* Adding 3D perspective*/
     perspective: 1000px; 
 }
@@ -40,8 +79,7 @@ h2 {
     margin: 5px;
     position: relative;
     transform: scale(1);
-    /* box-shadow: 0px 1px 8px 1px rgba(69,69,69,1); */
-    box-shadow: 0px 0px 7px 1px rgba(97,97,97,0.89);
+    box-shadow: 2px 4px 4px -2px rgba(0,0,0,0.5);
 
     /* Adding 3D perspective*/
     transform-style: preserve-3d;
@@ -72,31 +110,36 @@ h2 {
 
 .scores {
     display: flex;
-    justify-content: center;
 }
 
 .scores p {
-    display: inline-block;
-    padding: 10px;
-    margin: 5px;
+    /* padding: 10px; */
+    margin: auto;
     color: #6f4b32;
     border-radius: 3px;
-    font-size: 20px;
+    font-size: 1.25rem;
 
 }
-
 
 footer {
     margin-top: 20px;
     text-align: center;
-    font-size: 10px;
+    font-size: .625rem;
 }
 
 footer a {text-decoration: none;}
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
+    html {
+        font-size: 14px;
+    }
+    .container {
+        width: 100%;
+    }
+    .container button {
+        padding: 16px 6px;
+    }
     .board {
-        width: auto;
         display: flex;
         justify-content: center;
     }
@@ -106,5 +149,10 @@ footer a {text-decoration: none;}
         align-items: center;
         margin: 5px;
 
+    }
+
+    .scores {
+        display: block;
+        text-align: center;
     }
 }

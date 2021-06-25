@@ -1,20 +1,63 @@
 const cartas = document.querySelectorAll('.card');
 const aciertos = document.querySelector('.aciertos');
 const incorrecto = document.querySelector('.incorrecto');
-const cronometro = document.querySelector('.cronometro');
+const cronometro = document.querySelector('.stopwatch');
+const button = document.querySelector('#comenzar');
 
 let CartaGirada = false;
-let TableroBloqueado = false;
+//por defecto, el tablero estara bloqueado hasta que se pulse el boton
+let TableroBloqueado = true;
 let primeraCarta, segundaCarta;
 let hayMatch = 0;
 let noMatch = 0;
-let hours = `00`,
-    minutes = `00`,
-    seconds = `00`,
-    chronometerCall;
+
+let hours = 0,
+    minutes = 0,
+    seconds = 0;
+
+let displayHours = 0,
+    displayMinutes = 0,
+    displaySeconds = 0;
+
+let interval = null;
+let stoped = true;
 
 
-function girarCarta(){
+//funcionamiento del reloj
+const stopWatch = () => {
+    seconds++;
+
+    if (seconds / 60 === 1) {
+        seconds = 0;
+        minutes++;
+        
+        if(minutes / 60 === 1) {
+            minutes = 0;
+            hours++;
+        }
+    }   
+
+    //Si solo tienen un solo digito (1 a 9), se le añade un 0 adelante del numero
+    (seconds < 10) ? displaySeconds = "0"  + seconds.toString() : displaySeconds = seconds;
+    (minutes < 10) ? displayMinutes = "0"  + minutes.toString() : displayMinutes = minutes;
+    (hours < 10) ? displayHours = "0"  + hours.toString() : displayHours = Hours;
+    
+
+    cronometro.innerHTML = `${displayHours}:${displayMinutes}:${displaySeconds}`;
+}
+
+// empezar y detener el reloj
+const startWatch = () => {
+    if (stoped = true) {
+        interval = window.setInterval(stopWatch, 1000);
+        stoped = false;
+        button.disabled = true;
+        TableroBloqueado = false;
+        return ;
+    } 
+}
+
+function girarCarta () { 
     if(TableroBloqueado) return;
     if(this === primeraCarta) return;
 
@@ -35,13 +78,13 @@ function girarCarta(){
 }
 
 //si hay matching, las cartas quedan deshabilitadas
-function checkForMatch(){
+const checkForMatch = () => {
     let Match = primeraCarta.dataset.match === segundaCarta.dataset.match;
     Match ? desabilitarCartas() : esconderCarta();  //Ternary Operator, un simplificador del if,  condition ? expr1(true) : expr2(false)
 }
 
 //desabilita las cartas que hayan tenido match
-function desabilitarCartas(){
+const desabilitarCartas = () =>{
     primeraCarta.removeEventListener('click', girarCarta);
     segundaCarta.removeEventListener('click', girarCarta);
     
@@ -50,7 +93,7 @@ function desabilitarCartas(){
 }
 
 //si no hay matching, se giran las cartas denuevo
-function esconderCarta() {
+const esconderCarta = () => {
     TableroBloqueado = true; //bloquea el tablero hasta que se haya completado la funcion
     setTimeout (() => {
         primeraCarta.classList.remove('flip');
@@ -62,31 +105,32 @@ function esconderCarta() {
 }
 
 //Resetea el tablero
-function resetearTablero(){
+const resetearTablero = () => {
     [CartaGirada, TableroBloqueado] = [false, false];
     [primeraCarta, segundaCarta] = [null,null];
 }
 
 //si no hay match, se suman los errores
-function desaciertos(){
+const desaciertos = () => {
     noMatch ++;
     incorrecto.innerHTML = "Jugadas incorrectas: " + noMatch;
 }
 
 //si hay par se cuentan puntos
-function acertadas(){
+const acertadas = () =>{
     hayMatch ++;
     aciertos.innerHTML = "Jugadas acertadas: " + hayMatch;
     ganaste();
 }
 
-function ganaste() {
+const ganaste = () => {
     if (hayMatch === 6) {
         setTimeout(() => {
-            alert("¡Felicidades, has ganado!");
+            alert(`¡Felicidades, tu tiemppo fue de: ${cronometro.innerHTML} !`);
         }, 600)
         TableroBloqueado = true;
-    }
+        window.clearInterval(interval);
+    }   
 } 
 //reparte las cartas aleatoriamente
 (function repartirCartas(){
@@ -97,5 +141,6 @@ function ganaste() {
 })();
 
 //por cada carta clickeada, se llamara a la funcion flipcard (girar carta)
+button.addEventListener('click', startWatch);
 cartas.forEach(carta => carta.addEventListener('click', girarCarta));
     
